@@ -1,0 +1,34 @@
+<% title "Group" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @group.name %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%=h @group.email %>
+</p>
+<hr>
+<h2>Members</h2>
+<div>
+  <table class="index">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>&nbsp;</th>
+    </tr>
+    <% for user in @group.accounts %>
+        <tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+          <td><%=h user.name %></td>
+          <td><%=h user.email %></td>
+          <td><%= link_to "Show", edit_account_path(user) %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>
+<hr>
+<p>
+  <%= link_to "Edit", edit_group_path(@group) %> |
+  <%= link_to "Destroy", @group, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", groups_path %>
+</p>

@@ -1,0 +1,16 @@
+<% form_for @account do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label "Group" %> &nbsp;
+    <%= f.collection_select( :group_id, Group.all, :id, :name, {:include_blank => 'None'} ) %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

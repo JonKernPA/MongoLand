@@ -1,0 +1,21 @@
+<% title "Accounts" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Group</th>
+  </tr>
+  <% for account in @accounts %>
+    <tr>
+      <td><%=h account.name %></td>
+      <td><%=h account.email %></td>
+      <td><%= link_to( account.group.name, group_path(account.group)) unless account.group.nil? %></td>
+      <td><%= link_to "Show", account %></td>
+      <td><%= link_to "Edit", edit_account_path(account) %></td>
+      <td><%= link_to "Destroy", account, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Account", new_account_path %></p>

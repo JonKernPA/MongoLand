@@ -1,0 +1,21 @@
+<% title "Account" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @account.name %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%=h @account.email %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%=h @account.group.to_s %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_account_path(@account) %> |
+  <%= link_to "Destroy", @account, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", accounts_path %>
+</p>

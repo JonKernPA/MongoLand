@@ -1,0 +1,29 @@
+# ::::::::::::::::::::::::::::::::::::::::::::::: #
+# Even though we don't need a database, I left this
+# defined so I can run various generators...
+# ::::::::::::::::::::::::::::::::::::::::::::::: #
+
+# development:
+#   adapter: sqlite3
+#   database: db/development.sqlite3
+#   pool: 5
+#   timeout: 5000
+  
+development:
+  adapter: mongodb
+  host: localhost
+  database: mongoland
+
+test: &TEST
+  adapter: mongodb
+  host: localhost
+  database: mongoland_test
+
+production:
+  adapter: mongodb
+  host: localhost
+  database: mongoland
+
+cucumber:
+  <<: *TEST
+  

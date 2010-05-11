@@ -55,3 +55,47 @@ Then /^I should not see "([^\"]*)" in "([^\"]*)" group$/ do |expected_user, expe
   response.should contain(expected_group)
   response.should_not contain(expected_user)
 end
+
+# Scenario: Designate a proxy
+
+Given /^a user "([^\"]*)" with an email "([^\"]*)" that is a member of "([^\"]*)"$/ do |user, email, group_name|
+  Given "a user \"#{user}\""
+  Given "a group named \"#{group_name}\""
+  @user.email = email
+  @user.save
+end
+
+When /^"([^\"]*)" designates "([^\"]*)" as a proxy for the next "([^\"]*)" days$/ do |owner, proxy, num_days|
+  @user = Account.find_by_name(owner)
+  designee = Account.find_by_name(proxy)
+  SECONDS_PER_DAY = 60 * 60 * 24
+  number_days = num_days.to_i * SECONDS_PER_DAY
+  proxy = Proxy.create!(:proxy => designee, :from => Time.now()-SECONDS_PER_DAY, :to => Time.now+number_days )
+  proxy.save
+  @user.proxies << proxy
+  @user.save
+end
+
+Then /^the notification list should include "([^\"]*)" email$/ do |expected_user|
+  user = Account.find_by_name( expected_user )
+  user.notify_me = true
+  expected_email = user.email
+  p user
+  @user.notify_me = true
+  @user.save
+  p @user
+  p @user.proxies
+  @user.notification_list.should include(expected_email)
+end
+
+# Scenario: User can indicate they want to be notified
+And /^an email "([^\"]*)"$/ do |user_email|
+  @user.email = user_email
+  @user.save
+end
+
+When /^NotifyMe is checked$/ do
+  @user.notify_me = true
+  @user.save
+end
+
